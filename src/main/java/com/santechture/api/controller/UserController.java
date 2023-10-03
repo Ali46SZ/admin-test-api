@@ -1,8 +1,10 @@
 package com.santechture.api.controller;
 
 
+import com.santechture.api.dto.AdminDetails;
 import com.santechture.api.dto.GeneralResponse;
 import com.santechture.api.exception.BusinessExceptions;
+import com.santechture.api.service.AdminServiceDetails;
 import com.santechture.api.service.UserService;
 import com.santechture.api.validation.AddUserRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     private final UserService userService;
-    public UserController(UserService userService) {
+
+    private final AdminServiceDetails adminServiceDetails;
+    public UserController(UserService userService, AdminServiceDetails adminServiceDetails) {
         this.userService = userService;
+        this.adminServiceDetails = adminServiceDetails;
     }
 
     @GetMapping
@@ -27,7 +32,10 @@ public class UserController {
         return userService.list(pageable);
     }
     @PostMapping
-    public ResponseEntity<GeneralResponse> addNewUser(@RequestBody AddUserRequest request, Authentication authentication, HttpServletResponse response) throws BusinessExceptions {
-        return userService.addNewUser(request, authentication);
+    public ResponseEntity<GeneralResponse> addNewUser(@RequestBody AddUserRequest request, Authentication authentication) throws BusinessExceptions {
+        ResponseEntity<GeneralResponse> response =  userService.addNewUser(request, authentication);
+        Integer adminId = ((AdminDetails) authentication.getPrincipal()).getAdminId();
+        adminServiceDetails.revokeAllUserTokens(adminId);
+        return response;
     }
 }

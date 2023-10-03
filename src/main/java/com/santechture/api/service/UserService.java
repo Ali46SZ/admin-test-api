@@ -17,10 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final AdminServiceDetails adminServiceDetails;
-    public UserService(UserRepository userRepository, AdminServiceDetails adminServiceDetails) {
+
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.adminServiceDetails = adminServiceDetails;
     }
 
     public ResponseEntity<GeneralResponse> list(Pageable pageable){
@@ -37,9 +36,6 @@ public class UserService {
 
         User user = new User(request.getUsername(),request.getEmail());
         userRepository.save(user);
-
-        Integer adminId = ((AdminDetails) authentication.getPrincipal()).getAdminId();
-        adminServiceDetails.revokeAllUserTokens(adminId);
         return new GeneralResponse().response(new UserDto(user));
     }
 
