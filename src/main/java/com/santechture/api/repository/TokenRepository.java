@@ -1,13 +1,19 @@
 package com.santechture.api.repository;
 
-import com.santechture.api.entity.Admin;
+import com.santechture.api.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
-    Admin findByUsernameIgnoreCase(String username);
+public interface TokenRepository extends JpaRepository<Token, Integer> {
 
+    @Query(value = " select t from Token t inner join Admin u on t.admin.adminId = u.adminId " +
+            "where u.adminId = :id and (t.expired = false or t.revoked = false) ")
+    List<Token> findAllValidTokenByUser(Integer id);
+
+    Optional<Token> findByToken(String token);
 }

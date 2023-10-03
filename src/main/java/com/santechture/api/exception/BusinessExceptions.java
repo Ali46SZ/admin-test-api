@@ -1,4 +1,4 @@
-package com.atheletshub.mobile.api.exceptions;
+package com.santechture.api.exception;
 
 import lombok.extern.slf4j.Slf4j;
 

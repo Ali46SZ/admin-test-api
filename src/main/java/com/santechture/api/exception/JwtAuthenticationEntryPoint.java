@@ -1,4 +1,4 @@
-package com.santechture.api.configuration;
+package com.santechture.api.exception;
 
 import java.io.IOException;
 import java.io.Serializable;

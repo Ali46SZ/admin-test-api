@@ -1,4 +1,4 @@
-package com.atheletshub.mobile.api.dto;
+package com.santechture.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

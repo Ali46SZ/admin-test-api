@@ -1,25 +1,25 @@
-package com.santechture.api.dto.admin;
+package com.santechture.api.dto.user;
 
 import com.santechture.api.entity.Admin;
+import com.santechture.api.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AdminDto {
+public class UserDto {
 
-    private Integer adminId;
+    private Integer userId;
 
     private String username;
 
-    public AdminDto(Admin admin){
-        setAdminId(admin.getAdminId());
-        setUsername(admin.getUsername());
+    private String email;
+    public UserDto(User user){
+        setUserId(user.getUserId());
+        setUsername(user.getUsername());
+        setEmail(user.getEmail());
     }
 
 }
