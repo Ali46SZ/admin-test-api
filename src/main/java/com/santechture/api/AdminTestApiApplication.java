@@ -9,7 +9,6 @@ public class AdminTestApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AdminTestApiApplication.class, args);
-        System.out.println("Password: "+new BCryptPasswordEncoder().encode("p@ssw0rd"));
     }
 
 
